@@ -1,0 +1,72 @@
+# application.properties.example
+# This is an EXAMPLE file showing the environment variables required
+# Copy this file to application.properties and fill in your actual values
+# DO NOT commit actual credentials to version control
+
+# ==========================================
+# DEVELOPMENT SETUP (application-dev.properties)
+# ==========================================
+# For local development, you can set these directly or use environment variables
+
+# Database
+DB_PASSWORD=your_dev_database_password
+
+# JWT (must be at least 32 characters)
+# Generate with: openssl rand -base64 32
+JWT_SECRET=your_dev_jwt_secret_min_32_characters_required
+
+# Admin Registration (optional, set to empty to disable)
+ADMIN_REGISTRATION_KEY=your_dev_admin_registration_key
+
+# ==========================================
+# PRODUCTION SETUP (application-prod.properties)
+# ==========================================
+# All these MUST be set as environment variables in production
+# NEVER hardcode these values
+
+# Database Configuration
+DB_URL=jdbc:postgresql://prod-db-host:5432/ecommerce_db
+DB_USERNAME=prod_db_user
+DB_PASSWORD=your_production_database_password
+
+# Redis Configuration
+REDIS_HOST=prod-redis-host
+REDIS_PORT=6379
+REDIS_PASSWORD=your_redis_password
+
+# JWT Configuration (use strong, random secret)
+# Generate with: openssl rand -base64 64
+JWT_SECRET=your_production_jwt_secret_min_256_bits_required
+
+# Admin Registration (use very strong, random key)
+ADMIN_REGISTRATION_KEY=your_production_admin_registration_key
+
+# ==========================================
+# RUNNING THE APPLICATION
+# ==========================================
+
+# Development:
+# mvn spring-boot:run
+# OR
+# mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=dev"
+
+# Production (example):
+# export SPRING_PROFILES_ACTIVE=prod
+# export DB_URL=jdbc:postgresql://prod-db:5432/db
+# export DB_USERNAME=user
+# export DB_PASSWORD=password
+# export JWT_SECRET=your_secret
+# export REDIS_HOST=prod-redis
+# java -jar ProductComparison-0.0.1-SNAPSHOT.jar
+
+# ==========================================
+# DOCKER SETUP EXAMPLE
+# ==========================================
+# docker run -e SPRING_PROFILES_ACTIVE=prod \
+#            -e DB_URL=jdbc:postgresql://postgres:5432/db \
+#            -e DB_USERNAME=postgres \
+#            -e DB_PASSWORD=password \
+#            -e JWT_SECRET=your_secret \
+#            -e REDIS_HOST=redis \
+#            -p 8080:8080 \
+#            productcomparison:latest
